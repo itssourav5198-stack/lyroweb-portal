@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Lyroweb Solution — Intern Portal</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -14,8 +15,6 @@
 }
 body{font-family:var(--font);background:var(--gray);color:var(--black);min-height:100vh}
 .hidden{display:none!important}
-
-/* AUTH PAGES */
 .auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--black);padding:20px;position:relative;overflow:hidden}
 .auth-wrap::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(26,122,74,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(26,122,74,0.06) 1px,transparent 1px);background-size:50px 50px}
 .auth-wrap::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
@@ -35,8 +34,6 @@ body{font-family:var(--font);background:var(--gray);color:var(--black);min-heigh
 .btn-full:disabled{opacity:0.6;cursor:not-allowed}
 .auth-error{background:#FEE;border:1px solid #FCC;color:var(--red);font-size:13px;padding:10px 14px;border-radius:8px;margin-bottom:16px}
 .auth-success{background:var(--green-pale);border:1px solid #B2DFCC;color:var(--green);font-size:13px;padding:10px 14px;border-radius:8px;margin-bottom:16px}
-
-/* TOP NAV */
 #app-nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:0;z-index:100}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;height:60px;max-width:1100px;margin:0 auto}
 .nav-logo{font-family:var(--display);font-size:17px;font-weight:700}
@@ -47,30 +44,20 @@ body{font-family:var(--font);background:var(--gray);color:var(--black);min-heigh
 .btn-signout{background:var(--gray);border:none;padding:7px 14px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.2s}
 .btn-signout:hover{background:var(--border)}
 .admin-badge{background:var(--gold-pale);color:#8B6914;border:1px solid rgba(201,168,76,0.3);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:100px}
-
-/* LAYOUT */
 .app-wrap{max-width:1100px;margin:0 auto;padding:32px 24px;display:grid;grid-template-columns:220px 1fr;gap:28px}
 @media(max-width:768px){.app-wrap{grid-template-columns:1fr;padding:16px}}
-
-/* SIDEBAR */
 .sidebar{display:flex;flex-direction:column;gap:6px}
 .sidebar-item{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.15s;color:var(--gray-mid);border:none;background:transparent;text-align:left}
 .sidebar-item:hover{background:var(--white);color:var(--black)}
 .sidebar-item.active{background:var(--white);color:var(--black);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,0.07)}
 .sidebar-item .si{font-size:17px}
 .sidebar-section{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray-mid);padding:14px 14px 6px;margin-top:8px}
-
-/* PANELS */
 .panel{display:none}
 .panel.active{display:block}
 .panel-title{font-family:var(--display);font-size:24px;font-weight:700;margin-bottom:6px}
 .panel-sub{font-size:14px;color:var(--gray-mid);margin-bottom:28px}
-
-/* CARDS */
 .card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:20px}
 .card-title{font-family:var(--display);font-size:16px;font-weight:700;margin-bottom:8px}
-
-/* DASHBOARD */
 .dash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
 @media(max-width:600px){.dash-grid{grid-template-columns:1fr}}
 .dash-stat{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
@@ -81,8 +68,6 @@ body{font-family:var(--font);background:var(--gray);color:var(--black);min-heigh
 .status-submitted{background:#E3F2FD;color:#1565C0}
 .status-approved{background:var(--green-pale);color:var(--green)}
 .status-completed{background:var(--gold-pale);color:#8B6914}
-
-/* TASK */
 .track-header{display:flex;align-items:center;gap:14px;background:var(--black);border-radius:14px;padding:24px;margin-bottom:20px;color:var(--white)}
 .track-emoji-big{font-size:36px}
 .track-info h2{font-family:var(--display);font-size:20px;font-weight:700}
@@ -94,24 +79,21 @@ body{font-family:var(--font);background:var(--gray);color:var(--black);min-heigh
 .btn-outline:hover{border-color:var(--green);color:var(--green)}
 .btn-gold{background:var(--gold);color:var(--white);border:none;padding:11px 22px;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font);transition:all 0.2s;display:inline-flex;align-items:center;gap:8px}
 .btn-gold:hover{background:var(--gold-light)}
-
-/* UPLOAD */
 .upload-zone{border:2px dashed var(--border);border-radius:12px;padding:36px;text-align:center;transition:all 0.2s;cursor:pointer}
 .upload-zone:hover,.upload-zone.drag{border-color:var(--green);background:var(--green-pale)}
 .upload-zone p{font-size:14px;color:var(--gray-mid);margin-top:8px}
 .upload-zone input{display:none}
 .upload-icon{font-size:32px}
 .file-chosen{background:var(--green-pale);border:1px solid #B2DFCC;border-radius:9px;padding:12px 16px;font-size:13px;color:var(--green);font-weight:500;margin-top:12px}
-
-/* LETTERS */
 .letter-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:500px){.letter-cards{grid-template-columns:1fr}}
 .letter-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px;text-align:center}
 .letter-icon{font-size:40px;margin-bottom:12px}
 .letter-card h3{font-family:var(--display);font-size:16px;font-weight:700;margin-bottom:6px}
 .letter-card p{font-size:13px;color:var(--gray-mid);margin-bottom:16px;line-height:1.5}
-
-/* ADMIN TABLE */
+.cert-number-box{background:var(--black);border-radius:12px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.cert-number-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.cert-number-value{font-family:var(--display);font-size:18px;font-weight:700;color:var(--white);letter-spacing:2px}
 .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th{background:var(--gray);padding:12px 16px;text-align:left;font-weight:600;font-size:12px;letter-spacing:0.5px;text-transform:uppercase;color:var(--gray-mid)}
@@ -121,19 +103,10 @@ tr:hover td{background:#FAFAF8}
 .action-btn{padding:5px 12px;border-radius:6px;font-size:12px;font-weight:600;border:none;cursor:pointer;font-family:var(--font);transition:all 0.2s}
 .action-btn.view{background:var(--gray);color:var(--black)}
 .action-btn.view:hover{background:var(--border)}
-.action-btn.approve{background:var(--green-pale);color:var(--green)}
-.action-btn.approve:hover{background:var(--green);color:var(--white)}
 .select-status{padding:4px 8px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--font);outline:none}
-
-/* LOADING */
 .loading-overlay{position:fixed;inset:0;background:rgba(255,255,255,0.8);display:flex;align-items:center;justify-content:center;z-index:999;backdrop-filter:blur(4px)}
 .spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin 0.7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* PDF VIEWER */
-.pdf-frame{width:100%;height:500px;border:none;border-radius:12px;background:var(--gray)}
-
-/* TOAST */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--black);color:var(--white);padding:13px 20px;border-radius:10px;font-size:14px;font-weight:500;z-index:9999;transform:translateY(100px);opacity:0;transition:all 0.3s;max-width:320px}
 .toast.show{transform:translateY(0);opacity:1}
 .toast.success{border-left:3px solid var(--green)}
@@ -142,10 +115,7 @@ tr:hover td{background:#FAFAF8}
 </head>
 <body>
 
-<!-- LOADING -->
 <div class="loading-overlay" id="loading"><div class="spinner"></div></div>
-
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <!-- AUTH PAGE -->
@@ -158,15 +128,29 @@ tr:hover td{background:#FAFAF8}
       <button class="auth-tab" onclick="switchTab('signup')">Sign Up</button>
     </div>
     <div id="auth-msg"></div>
-
-    <!-- LOGIN -->
     <div id="login-form">
-      <div class="form-group"><label>Email Address</label><input type="email" id="login-email" placeholder="you@email.com"/></div>
-      <div class="form-group"><label>Password</label><input type="password" id="login-pass" placeholder="Your password"/></div>
+      <div class="form-group"><label>Email Address</label><input type="email" id="login-email" placeholder="you@email.com" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+      <div class="form-group">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <label style="margin-bottom:0">Password</label>
+          <button onclick="showForgotPassword()" style="background:none;border:none;color:var(--green);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);padding:0">Forgot Password?</button>
+        </div>
+        <input type="password" id="login-pass" placeholder="Your password" onkeydown="if(event.key==='Enter')doLogin()"/>
+      </div>
       <button class="btn-full" onclick="doLogin()">Sign In →</button>
     </div>
 
-    <!-- SIGNUP -->
+    <!-- FORGOT PASSWORD FORM -->
+    <div id="forgot-form" class="hidden">
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="font-size:32px;margin-bottom:8px">🔑</div>
+        <div style="font-weight:700;font-size:16px;margin-bottom:4px">Reset Password</div>
+        <div style="font-size:13px;color:var(--gray-mid)">Enter your email — we'll send a reset link</div>
+      </div>
+      <div class="form-group"><label>Email Address</label><input type="email" id="forgot-email" placeholder="you@email.com" onkeydown="if(event.key==='Enter')doForgotPassword()"/></div>
+      <button class="btn-full" onclick="doForgotPassword()" id="btn-reset">Send Reset Link →</button>
+      <button onclick="showLoginForm()" style="width:100%;margin-top:10px;padding:10px;background:transparent;border:1px solid var(--border);border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font);color:var(--gray-mid)">← Back to Sign In</button>
+    </div>
     <div id="signup-form" class="hidden">
       <div class="form-group"><label>Full Name</label><input type="text" id="su-name" placeholder="Your full name"/></div>
       <div class="form-group"><label>Email Address</label><input type="email" id="su-email" placeholder="you@email.com"/></div>
@@ -193,7 +177,6 @@ tr:hover td{background:#FAFAF8}
 
 <!-- MAIN APP -->
 <div class="hidden" id="main-app">
-  <!-- NAV -->
   <nav id="app-nav">
     <div class="nav-inner">
       <div class="nav-logo">Lyroweb<span>.Solution</span> <span style="font-size:12px;font-weight:400;color:var(--gray-mid);margin-left:4px">Portal</span></div>
@@ -206,7 +189,6 @@ tr:hover td{background:#FAFAF8}
   </nav>
 
   <div class="app-wrap">
-    <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
       <div class="sidebar-section">Student</div>
       <button class="sidebar-item active" onclick="showPanel('dashboard')" data-panel="dashboard"><span class="si">🏠</span> Dashboard</button>
@@ -218,7 +200,6 @@ tr:hover td{background:#FAFAF8}
       <button class="sidebar-item admin-only hidden" onclick="showPanel('admin-submissions')" data-panel="admin-submissions"><span class="si">📥</span> Submissions</button>
     </div>
 
-    <!-- PANELS -->
     <div style="min-width:0">
 
       <!-- DASHBOARD -->
@@ -233,12 +214,13 @@ tr:hover td{background:#FAFAF8}
         <div class="card">
           <div class="card-title">📋 Your Internship Details</div>
           <table style="font-size:14px;width:100%">
-            <tr><td style="padding:8px 0;color:var(--gray-mid);width:140px">Name</td><td id="d-name" style="font-weight:500">—</td></tr>
+            <tr><td style="padding:8px 0;color:var(--gray-mid);width:160px">Name</td><td id="d-name" style="font-weight:500">—</td></tr>
             <tr><td style="padding:8px 0;color:var(--gray-mid)">Email</td><td id="d-email" style="font-weight:500">—</td></tr>
             <tr><td style="padding:8px 0;color:var(--gray-mid)">College</td><td id="d-college" style="font-weight:500">—</td></tr>
             <tr><td style="padding:8px 0;color:var(--gray-mid)">Track</td><td id="d-track" style="font-weight:500">—</td></tr>
             <tr><td style="padding:8px 0;color:var(--gray-mid)">Joined On</td><td id="d-joined" style="font-weight:500">—</td></tr>
             <tr><td style="padding:8px 0;color:var(--gray-mid)">Status</td><td id="d-status">—</td></tr>
+            <tr><td style="padding:8px 0;color:var(--gray-mid)">Certificate No.</td><td id="d-certnum" style="font-weight:500;font-family:monospace;color:var(--green)">—</td></tr>
           </table>
         </div>
         <div class="card" style="background:var(--black);border-color:var(--black)">
@@ -252,7 +234,7 @@ tr:hover td{background:#FAFAF8}
       <div class="panel" id="panel-task">
         <div class="panel-title">My Task 📋</div>
         <div class="panel-sub">Download and complete the task PDF for your track.</div>
-        <div class="track-header" id="task-track-header">
+        <div class="track-header">
           <div class="track-emoji-big" id="task-emoji">🌐</div>
           <div class="track-info"><h2 id="task-track-name">Your Track</h2><p>1 Month Remote Internship · Lyroweb Solution</p></div>
         </div>
@@ -262,10 +244,9 @@ tr:hover td{background:#FAFAF8}
           <div style="background:var(--gray);border-radius:10px;padding:20px;text-align:center;margin-bottom:16px">
             <div style="font-size:40px;margin-bottom:8px">📄</div>
             <div style="font-weight:600;margin-bottom:4px" id="task-pdf-name">Task PDF</div>
-            <div style="font-size:12px;color:var(--gray-mid)">Upload this PDF from Firebase Storage admin panel</div>
           </div>
           <div class="task-actions">
-            <button class="btn-green" id="btn-download-task" onclick="downloadTask()">⬇️ Download Task PDF</button>
+            <button class="btn-green" onclick="downloadTask()">⬇️ Download Task PDF</button>
             <button class="btn-outline" onclick="showPanel('submit')">📤 Submit My Work</button>
           </div>
         </div>
@@ -297,7 +278,7 @@ tr:hover td{background:#FAFAF8}
             <input type="file" id="file-input" accept=".pdf,.zip,.mp3,.mp4,.png,.jpg,.jpeg" onchange="fileSelected(this)"/>
           </div>
           <div id="file-chosen-display" class="hidden file-chosen">📎 <span id="file-name-display"></span></div>
-          <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+          <div style="margin-top:16px">
             <button class="btn-green" onclick="submitWork()" id="btn-submit-work">📤 Submit Now</button>
           </div>
           <div id="submit-progress" class="hidden" style="margin-top:14px">
@@ -307,7 +288,7 @@ tr:hover td{background:#FAFAF8}
             <div style="font-size:12px;color:var(--gray-mid);margin-top:6px" id="progress-text">Uploading...</div>
           </div>
         </div>
-        <div class="card" id="submission-history-card">
+        <div class="card">
           <div class="card-title">📋 Submission History</div>
           <div id="submission-history"><div style="color:var(--gray-mid);font-size:14px">No submissions yet.</div></div>
         </div>
@@ -317,24 +298,34 @@ tr:hover td{background:#FAFAF8}
       <div class="panel" id="panel-letters">
         <div class="panel-title">My Letters 📜</div>
         <div class="panel-sub">Download your official internship documents.</div>
+
+        <!-- Certificate Number Display -->
+        <div class="cert-number-box" id="cert-number-box">
+          <div>
+            <div class="cert-number-label">Your Certificate Number</div>
+            <div class="cert-number-value" id="cert-num-display">—</div>
+          </div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);max-width:180px;line-height:1.5">Share this number for verification at lyroweb.vercel.app/verify.html</div>
+        </div>
+
         <div class="letter-cards">
           <div class="letter-card">
             <div class="letter-icon">📋</div>
             <h3>Offer / Joining Letter</h3>
-            <p>Your official joining letter with your name, track, and start date — ready to use.</p>
+            <p>Your official joining letter with your name, track, and start date.</p>
             <button class="btn-green" onclick="downloadLetter('joining')" style="width:100%">⬇️ Download</button>
           </div>
           <div class="letter-card">
             <div class="letter-icon">🏆</div>
             <h3>Completion Certificate</h3>
-            <p>Issued after successful completion. Shows your achievement and track.</p>
-            <button class="btn-gold" onclick="downloadLetter('completion')" style="width:100%" id="btn-cert">⬇️ Download</button>
+            <p>Issued after successful completion. Includes certificate number & QR code.</p>
+            <button class="btn-gold" onclick="downloadLetter('completion')" style="width:100%">⬇️ Download</button>
           </div>
           <div class="letter-card">
             <div class="letter-icon">⭐</div>
             <h3>Experience Letter</h3>
             <p>Official experience & recommendation letter from Lyroweb Solution.</p>
-            <button class="btn-gold" onclick="downloadLetter('experience')" style="width:100%" id="btn-exp">⬇️ Download</button>
+            <button class="btn-gold" onclick="downloadLetter('experience')" style="width:100%">⬇️ Download</button>
           </div>
         </div>
       </div>
@@ -354,8 +345,8 @@ tr:hover td{background:#FAFAF8}
         </div>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Track</th><th>College</th><th>Joined</th><th>Status</th><th>Action</th></tr></thead>
-            <tbody id="students-table-body"><tr><td colspan="8" style="text-align:center;padding:24px;color:var(--gray-mid)">Loading...</td></tr></tbody>
+            <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Track</th><th>College</th><th>Joined</th><th>Cert No.</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="students-table-body"></tbody>
           </table>
         </div>
         <div style="font-size:13px;color:var(--gray-mid);margin-top:12px" id="student-count"></div>
@@ -371,7 +362,7 @@ tr:hover td{background:#FAFAF8}
         <div class="table-wrap">
           <table>
             <thead><tr><th>#</th><th>Student</th><th>Track</th><th>File</th><th>Submitted</th><th>Action</th></tr></thead>
-            <tbody id="submissions-table-body"><tr><td colspan="6" style="text-align:center;padding:24px;color:var(--gray-mid)">Loading...</td></tr></tbody>
+            <tbody id="submissions-table-body"></tbody>
           </table>
         </div>
       </div>
@@ -380,17 +371,15 @@ tr:hover td{background:#FAFAF8}
   </div>
 </div>
 
-<!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, getDocs, collection, updateDoc, addDoc, query, orderBy, where, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-// Cloudinary config (replaces Firebase Storage)
+
 const CLOUDINARY_CLOUD = "dtkm0iufr";
 const CLOUDINARY_PRESET = "lyroweb_uploads";
-const CLOUDINARY_API_KEY = "627911872278115";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAT8Do-5DKx1uqB3chP_o2FjiSDMouJR_w",
@@ -405,9 +394,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-
-// ADMIN EMAIL — change this to your email
-const ADMIN_EMAIL = "lyrowebsolution@gmail.com";
+const ADMIN_EMAIL = "sohimaproduction@gmail.com";
+const VERIFY_BASE_URL = "https://lyroweb-portal.vercel.app/verify.html";
 
 const TRACK_EMOJI = {
   "Web Development":"🌐","App Development":"📱","Song Writing":"🎵",
@@ -416,21 +404,26 @@ const TRACK_EMOJI = {
 
 let currentUser = null;
 let currentUserData = null;
-let allStudentsCache = [];
+let allStudentsData = [];
 
-// helpers
-window.showLoading = (v) => document.getElementById('loading').style.display = v ? 'flex' : 'none';
+// Generate unique certificate number
+function generateCertNumber(name, uid){
+  const year = new Date().getFullYear();
+  const initials = name.split(' ').map(n=>n[0]).join('').toUpperCase().substring(0,2);
+  const rand = Math.floor(1000 + Math.random()*9000);
+  return `LWS-${year}-${initials}${rand}`;
+}
+
+window.showLoading = (v) => document.getElementById('loading').style.display = v?'flex':'none';
 window.showToast = (msg, type='success') => {
   const t = document.getElementById('toast');
   t.textContent = msg; t.className = `toast ${type} show`;
-  setTimeout(() => t.className = 'toast', 3200);
+  setTimeout(() => t.className='toast', 3200);
 };
 window.showAuthMsg = (msg, type='error') => {
-  const el = document.getElementById('auth-msg');
-  el.innerHTML = `<div class="${type==='error'?'auth-error':'auth-success'}">${msg}</div>`;
+  document.getElementById('auth-msg').innerHTML = `<div class="${type==='error'?'auth-error':'auth-success'}">${msg}</div>`;
 };
 
-// AUTH STATE
 onAuthStateChanged(auth, async (user) => {
   showLoading(false);
   if(user){
@@ -438,10 +431,14 @@ onAuthStateChanged(auth, async (user) => {
     const snap = await getDoc(doc(db,'students',user.uid));
     if(snap.exists()){
       currentUserData = snap.data();
+      // Generate cert number if not exists
+      if(!currentUserData.certNumber){
+        const certNumber = generateCertNumber(currentUserData.name, user.uid);
+        await updateDoc(doc(db,'students',user.uid), {certNumber});
+        currentUserData.certNumber = certNumber;
+      }
       setupApp();
     } else {
-      // user in auth but not in firestore (shouldn't happen normally)
-      showLoading(false);
       document.getElementById('auth-page').classList.remove('hidden');
       document.getElementById('main-app').classList.add('hidden');
     }
@@ -456,17 +453,8 @@ function setupApp(){
   document.getElementById('main-app').classList.remove('hidden');
   const d = currentUserData;
   const isAdmin = currentUser.email === ADMIN_EMAIL;
-
-  // nav
   document.getElementById('nav-name').textContent = d.name;
-  if(isAdmin) document.getElementById('admin-badge').classList.remove('hidden');
-
-  // admin sidebar
-  if(isAdmin){
-    document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
-  }
-
-  // dashboard
+  if(isAdmin){ document.getElementById('admin-badge').classList.remove('hidden'); document.querySelectorAll('.admin-only').forEach(el=>el.classList.remove('hidden')); }
   document.getElementById('dash-greeting').textContent = `Welcome back, ${d.name}! Here's your internship overview.`;
   document.getElementById('stat-track').textContent = TRACK_EMOJI[d.track]||'';
   document.getElementById('stat-status').innerHTML = statusBadge(d.status||'Pending');
@@ -476,13 +464,11 @@ function setupApp(){
   document.getElementById('d-track').textContent = `${TRACK_EMOJI[d.track]||''} ${d.track}`;
   document.getElementById('d-joined').textContent = d.joinedAt ? new Date(d.joinedAt.seconds*1000).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'}) : '—';
   document.getElementById('d-status').innerHTML = statusBadge(d.status||'Pending');
-
-  // task
+  document.getElementById('d-certnum').textContent = d.certNumber || '—';
+  document.getElementById('cert-num-display').textContent = d.certNumber || '—';
   document.getElementById('task-emoji').textContent = TRACK_EMOJI[d.track]||'📋';
   document.getElementById('task-track-name').textContent = d.track;
   document.getElementById('task-pdf-name').textContent = `${d.track} — Task PDF`;
-
-  // load submission history
   loadSubmissionHistory();
 }
 
@@ -491,235 +477,192 @@ function statusBadge(s){
   return `<span class="status-badge ${map[s]||'status-pending'}">${s}</span>`;
 }
 
-// SWITCH TAB
 window.switchTab = (tab) => {
-  document.querySelectorAll('.auth-tab').forEach((t,i) => t.classList.toggle('active', (tab==='login'&&i===0)||(tab==='signup'&&i===1)));
-  document.getElementById('login-form').classList.toggle('hidden', tab!=='login');
-  document.getElementById('signup-form').classList.toggle('hidden', tab!=='signup');
+  document.querySelectorAll('.auth-tab').forEach((t,i) => t.classList.toggle('active',(tab==='login'&&i===0)||(tab==='signup'&&i===1)));
+  document.getElementById('login-form').classList.toggle('hidden',tab!=='login');
+  document.getElementById('signup-form').classList.toggle('hidden',tab!=='signup');
+  document.getElementById('auth-msg').innerHTML='';
+};
+
+window.doSignup = async () => {
+  const name=document.getElementById('su-name').value.trim();
+  const email=document.getElementById('su-email').value.trim();
+  const phone=document.getElementById('su-phone').value.trim();
+  const college=document.getElementById('su-college').value.trim();
+  const track=document.getElementById('su-track').value;
+  const pass=document.getElementById('su-pass').value;
+  if(!name||!email||!phone||!college||!track||!pass) return showAuthMsg('Please fill all fields.');
+  if(pass.length<6) return showAuthMsg('Password must be at least 6 characters.');
+  showLoading(true);
+  try {
+    const cred = await createUserWithEmailAndPassword(auth,email,pass);
+    const certNumber = generateCertNumber(name, cred.user.uid);
+    await setDoc(doc(db,'students',cred.user.uid),{
+      uid:cred.user.uid, name, email, phone, college, track,
+      status:'Pending', certNumber, joinedAt:serverTimestamp(), role:'student'
+    });
+    showToast('Account created! Welcome aboard 🎉');
+  } catch(e){ showLoading(false); showAuthMsg(friendlyError(e.code)); }
+};
+
+window.doLogin = async () => {
+  const email=document.getElementById('login-email').value.trim();
+  const pass=document.getElementById('login-pass').value;
+  if(!email||!pass) return showAuthMsg('Enter email and password.');
+  showLoading(true);
+  try { await signInWithEmailAndPassword(auth,email,pass); }
+  catch(e){ showLoading(false); showAuthMsg(friendlyError(e.code)); }
+};
+
+window.showForgotPassword = () => {
+  document.getElementById('login-form').classList.add('hidden');
+  document.getElementById('forgot-form').classList.remove('hidden');
+  document.getElementById('auth-msg').innerHTML = '';
+  const loginEmail = document.getElementById('login-email').value;
+  if(loginEmail) document.getElementById('forgot-email').value = loginEmail;
+};
+
+window.showLoginForm = () => {
+  document.getElementById('forgot-form').classList.add('hidden');
+  document.getElementById('login-form').classList.remove('hidden');
   document.getElementById('auth-msg').innerHTML = '';
 };
 
-// SIGNUP
-window.doSignup = async () => {
-  const name = document.getElementById('su-name').value.trim();
-  const email = document.getElementById('su-email').value.trim();
-  const phone = document.getElementById('su-phone').value.trim();
-  const college = document.getElementById('su-college').value.trim();
-  const track = document.getElementById('su-track').value;
-  const pass = document.getElementById('su-pass').value;
-  if(!name||!email||!phone||!college||!track||!pass) return showAuthMsg('Please fill all fields.');
-  if(pass.length < 6) return showAuthMsg('Password must be at least 6 characters.');
-  showLoading(true);
+window.doForgotPassword = async () => {
+  const email = document.getElementById('forgot-email').value.trim();
+  if(!email) return showAuthMsg('Please enter your email address.');
+  const btn = document.getElementById('btn-reset');
+  btn.disabled = true; btn.textContent = 'Sending...';
   try {
-    const cred = await createUserWithEmailAndPassword(auth, email, pass);
-    await setDoc(doc(db,'students',cred.user.uid),{
-      uid: cred.user.uid, name, email, phone, college, track,
-      status:'Pending', joinedAt: serverTimestamp(), role:'student'
-    });
-    showToast('Account created! Welcome aboard 🎉');
-  } catch(e){
-    showLoading(false);
-    showAuthMsg(friendlyError(e.code));
+    await sendPasswordResetEmail(auth, email);
+    document.getElementById('auth-msg').innerHTML = `<div class="auth-success">✅ Reset link sent to <strong>${email}</strong>! Check your inbox (and spam folder).</div>`;
+    btn.textContent = 'Email Sent ✓';
+    setTimeout(() => { showLoginForm(); btn.disabled=false; btn.textContent='Send Reset Link →'; }, 3000);
+  } catch(e) {
+    btn.disabled = false; btn.textContent = 'Send Reset Link →';
+    const map = {'auth/user-not-found':'No account found with this email.','auth/invalid-email':'Invalid email address.','auth/too-many-requests':'Too many attempts. Try again later.'};
+    showAuthMsg(map[e.code] || 'Failed to send reset email. Try again.');
   }
 };
 
-// LOGIN
-window.doLogin = async () => {
-  const email = document.getElementById('login-email').value.trim();
-  const pass = document.getElementById('login-pass').value;
-  if(!email||!pass) return showAuthMsg('Enter email and password.');
-  showLoading(true);
-  try {
-    await signInWithEmailAndPassword(auth, email, pass);
-  } catch(e){
-    showLoading(false);
-    showAuthMsg(friendlyError(e.code));
-  }
-};
-
-// SIGNOUT
 window.doSignOut = async () => {
   await signOut(auth);
-  currentUser = null; currentUserData = null;
+  currentUser=null; currentUserData=null;
   document.getElementById('auth-page').classList.remove('hidden');
   document.getElementById('main-app').classList.add('hidden');
 };
 
-// PANEL SWITCH
 window.showPanel = (id) => {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(s=>s.classList.remove('active'));
   document.getElementById(`panel-${id}`).classList.add('active');
   document.querySelector(`[data-panel="${id}"]`)?.classList.add('active');
   if(id==='admin-students') loadAllStudents();
   if(id==='admin-submissions') loadAllSubmissions();
 };
 
-// DOWNLOAD TASK PDF — stored in Cloudinary under folder "lyroweb-tasks"
 window.downloadTask = async () => {
   const track = currentUserData.track;
-  const trackFile = {
-    "Web Development":"web-development","App Development":"app-development",
-    "Song Writing":"song-writing","AI Short Movie":"ai-short-movie",
-    "Singing":"singing","Poster & Template Design":"poster-design","AI Voice Agent":"ai-voice-agent"
-  };
-  const publicId = `lyroweb-tasks/${trackFile[track]}`;
-  const url = `https://res.cloudinary.com/${CLOUDINARY_CLOUD}/raw/upload/${publicId}.pdf`;
-  // Try to open — if not found, show error
+  const trackFile = {"Web Development":"web-development","App Development":"app-development","Song Writing":"song-writing","AI Short Movie":"ai-short-movie","Singing":"singing","Poster & Template Design":"poster-design","AI Voice Agent":"ai-voice-agent"};
+  const url = `https://res.cloudinary.com/${CLOUDINARY_CLOUD}/raw/upload/lyroweb-tasks/${trackFile[track]}.pdf`;
   showLoading(true);
   try {
-    const res = await fetch(url, {method:'HEAD'});
+    const res = await fetch(url,{method:'HEAD'});
     showLoading(false);
-    if(res.ok){ window.open(url,'_blank'); }
-    else { showToast('Task PDF not uploaded yet. Admin will upload soon.','error'); }
-  } catch(e){
-    showLoading(false);
-    window.open(url,'_blank'); // try anyway
-  }
+    if(res.ok) window.open(url,'_blank');
+    else showToast('Task PDF not uploaded yet. Admin will upload soon.','error');
+  } catch(e){ showLoading(false); window.open(url,'_blank'); }
 };
 
-// FILE SELECT
 let selectedFile = null;
 window.fileSelected = (input) => {
-  selectedFile = input.files[0];
-  if(selectedFile){
-    document.getElementById('file-chosen-display').classList.remove('hidden');
-    document.getElementById('file-name-display').textContent = selectedFile.name;
-  }
+  selectedFile=input.files[0];
+  if(selectedFile){ document.getElementById('file-chosen-display').classList.remove('hidden'); document.getElementById('file-name-display').textContent=selectedFile.name; }
 };
 window.handleDrop = (e) => {
   e.preventDefault();
   document.getElementById('upload-zone').classList.remove('drag');
-  const f = e.dataTransfer.files[0];
-  if(f){ selectedFile = f; document.getElementById('file-chosen-display').classList.remove('hidden'); document.getElementById('file-name-display').textContent = f.name; }
+  const f=e.dataTransfer.files[0];
+  if(f){ selectedFile=f; document.getElementById('file-chosen-display').classList.remove('hidden'); document.getElementById('file-name-display').textContent=f.name; }
 };
 
-// SUBMIT WORK — upload to Cloudinary
 window.submitWork = async () => {
   if(!selectedFile) return showToast('Please select a file first.','error');
-  if(selectedFile.size > 50*1024*1024) return showToast('File too large. Max 50MB.','error');
-  const btn = document.getElementById('btn-submit-work');
-  btn.disabled = true;
+  if(selectedFile.size>50*1024*1024) return showToast('File too large. Max 50MB.','error');
+  const btn=document.getElementById('btn-submit-work');
+  btn.disabled=true;
   document.getElementById('submit-progress').classList.remove('hidden');
-  document.getElementById('progress-bar').style.width = '10%';
-  document.getElementById('progress-text').textContent = 'Uploading to Cloudinary...';
-
+  document.getElementById('progress-bar').style.width='10%';
+  document.getElementById('progress-text').textContent='Uploading...';
   try {
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-    formData.append('upload_preset', CLOUDINARY_PRESET);
-    formData.append('folder', `lyroweb-submissions/${currentUser.uid}`);
-    formData.append('public_id', `${Date.now()}_${selectedFile.name.replace(/\s+/g,'_')}`);
-
-    // Use XMLHttpRequest for progress tracking
-    const xhr = new XMLHttpRequest();
-    const resourceType = selectedFile.type.startsWith('video') ? 'video'
-      : selectedFile.type.startsWith('audio') ? 'video'  // Cloudinary uses 'video' for audio too
-      : selectedFile.type === 'application/pdf' || selectedFile.name.endsWith('.zip') ? 'raw'
-      : 'image';
-
-    xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/${resourceType}/upload`);
-
-    xhr.upload.onprogress = (e) => {
-      if(e.lengthComputable){
-        const pct = Math.round(e.loaded/e.total*100);
-        document.getElementById('progress-bar').style.width = pct+'%';
-        document.getElementById('progress-text').textContent = `Uploading... ${pct}%`;
-      }
-    };
-
-    xhr.onload = async () => {
-      if(xhr.status === 200){
-        const result = JSON.parse(xhr.responseText);
-        const url = result.secure_url;
-        // Save to Firestore
-        await addDoc(collection(db,'submissions'),{
-          uid: currentUser.uid, name: currentUserData.name, email: currentUserData.email,
-          track: currentUserData.track, fileName: selectedFile.name, fileUrl: url,
-          submittedAt: serverTimestamp(), status:'Submitted'
-        });
+    const formData=new FormData();
+    formData.append('file',selectedFile);
+    formData.append('upload_preset',CLOUDINARY_PRESET);
+    formData.append('folder',`lyroweb-submissions/${currentUser.uid}`);
+    const resourceType=selectedFile.type.startsWith('video')?'video':selectedFile.type.startsWith('audio')?'video':selectedFile.type==='application/pdf'||selectedFile.name.endsWith('.zip')?'raw':'image';
+    const xhr=new XMLHttpRequest();
+    xhr.open('POST',`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/${resourceType}/upload`);
+    xhr.upload.onprogress=(e)=>{ if(e.lengthComputable){ const p=Math.round(e.loaded/e.total*100); document.getElementById('progress-bar').style.width=p+'%'; document.getElementById('progress-text').textContent=`Uploading... ${p}%`; } };
+    xhr.onload=async()=>{
+      if(xhr.status===200){
+        const result=JSON.parse(xhr.responseText);
+        await addDoc(collection(db,'submissions'),{uid:currentUser.uid,name:currentUserData.name,email:currentUserData.email,track:currentUserData.track,fileName:selectedFile.name,fileUrl:result.secure_url,submittedAt:serverTimestamp(),status:'Submitted'});
         await updateDoc(doc(db,'students',currentUser.uid),{status:'Submitted'});
-        currentUserData.status = 'Submitted';
+        currentUserData.status='Submitted';
         showToast('Work submitted successfully! 🎉');
         document.getElementById('submit-progress').classList.add('hidden');
-        document.getElementById('progress-bar').style.width = '0';
-        selectedFile = null;
-        document.getElementById('file-chosen-display').classList.add('hidden');
-        btn.disabled = false;
-        loadSubmissionHistory();
-        document.getElementById('stat-status').innerHTML = statusBadge('Submitted');
-        document.getElementById('d-status').innerHTML = statusBadge('Submitted');
-      } else {
-        const err = JSON.parse(xhr.responseText);
-        showToast('Upload failed: '+(err.error?.message||'Try again'),'error');
-        btn.disabled = false;
-        document.getElementById('submit-progress').classList.add('hidden');
-      }
+        document.getElementById('progress-bar').style.width='0';
+        selectedFile=null; document.getElementById('file-chosen-display').classList.add('hidden');
+        btn.disabled=false; loadSubmissionHistory();
+        document.getElementById('stat-status').innerHTML=statusBadge('Submitted');
+        document.getElementById('d-status').innerHTML=statusBadge('Submitted');
+      } else { showToast('Upload failed. Try again.','error'); btn.disabled=false; document.getElementById('submit-progress').classList.add('hidden'); }
     };
-
-    xhr.onerror = () => {
-      showToast('Upload failed. Check internet connection.','error');
-      btn.disabled = false;
-      document.getElementById('submit-progress').classList.add('hidden');
-    };
-
+    xhr.onerror=()=>{ showToast('Upload failed.','error'); btn.disabled=false; document.getElementById('submit-progress').classList.add('hidden'); };
     xhr.send(formData);
-  } catch(e){
-    showToast('Error: '+e.message,'error');
-    btn.disabled = false;
-    document.getElementById('submit-progress').classList.add('hidden');
-  }
+  } catch(e){ showToast('Error: '+e.message,'error'); btn.disabled=false; }
 };
 
-// SUBMISSION HISTORY
 async function loadSubmissionHistory(){
   try {
-    const q = query(collection(db,'submissions'), where('uid','==',currentUser.uid), orderBy('submittedAt','desc'));
-    const snap = await getDocs(q);
-    const el = document.getElementById('submission-history');
-    if(snap.empty){ el.innerHTML = '<div style="color:var(--gray-mid);font-size:14px">No submissions yet.</div>'; return; }
-    el.innerHTML = snap.docs.map((d,i) => {
-      const s = d.data();
-      const date = s.submittedAt ? new Date(s.submittedAt.seconds*1000).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
+    const q=query(collection(db,'submissions'),where('uid','==',currentUser.uid),orderBy('submittedAt','desc'));
+    const snap=await getDocs(q);
+    const el=document.getElementById('submission-history');
+    if(snap.empty){ el.innerHTML='<div style="color:var(--gray-mid);font-size:14px">No submissions yet.</div>'; return; }
+    el.innerHTML=snap.docs.map(d=>{
+      const s=d.data();
+      const date=s.submittedAt?new Date(s.submittedAt.seconds*1000).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):'—';
       return `<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);gap:12px;flex-wrap:wrap">
-        <div><div style="font-weight:600;font-size:14px">📎 ${s.fileName}</div><div style="font-size:12px;color:var(--gray-mid);margin-top:2px">${date}</div></div>
+        <div><div style="font-weight:600;font-size:14px">📎 ${s.fileName}</div><div style="font-size:12px;color:var(--gray-mid)">${date}</div></div>
         <div style="display:flex;gap:8px;align-items:center">${statusBadge(s.status||'Submitted')}<a href="${s.fileUrl}" target="_blank" class="action-btn view" style="text-decoration:none">View</a></div>
       </div>`;
     }).join('');
   } catch(e){ console.log(e); }
 }
 
-// LETTERS — generate personalized PDF using HTML print
+// LETTERS WITH CERT NUMBER + QR CODE
 window.downloadLetter = (type) => {
   const d = currentUserData;
   const now = new Date();
   const dateStr = now.toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
   const endDate = new Date(now); endDate.setMonth(endDate.getMonth()+1);
   const endStr = endDate.toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
-
   if(type==='joining'){
-    const html = joiningLetterHTML(d, dateStr, endStr);
-    printLetter(html, `Joining_Letter_${d.name.replace(/ /g,'_')}.pdf`);
+    printLetter(joiningLetterHTML(d,dateStr,endStr));
   } else if(type==='completion'){
-    if(d.status !== 'Completed' && currentUser.email !== ADMIN_EMAIL){
-      return showToast('Certificate available after internship completion.','error');
-    }
-    const html = completionLetterHTML(d, dateStr);
-    printLetter(html, `Certificate_${d.name.replace(/ /g,'_')}.pdf`);
+    if(d.status!=='Completed'&&currentUser.email!==ADMIN_EMAIL) return showToast('Certificate available after internship completion.','error');
+    printLetter(completionLetterHTML(d,dateStr));
   } else if(type==='experience'){
-    if(d.status !== 'Completed' && currentUser.email !== ADMIN_EMAIL){
-      return showToast('Experience letter available after internship completion.','error');
-    }
-    const html = experienceLetterHTML(d, dateStr);
-    printLetter(html, `Experience_Letter_${d.name.replace(/ /g,'_')}.pdf`);
+    if(d.status!=='Completed'&&currentUser.email!==ADMIN_EMAIL) return showToast('Experience letter available after internship completion.','error');
+    printLetter(experienceLetterHTML(d,dateStr));
   }
 };
 
-function printLetter(html, filename){
-  const w = window.open('','_blank','width=900,height=700');
+function printLetter(html){
+  const w=window.open('','_blank','width=900,height=700');
   w.document.write(html);
   w.document.close();
-  w.onload = () => { w.focus(); w.print(); };
+  w.onload=()=>{ w.focus(); w.print(); };
 }
 
 function letterStyles(){
@@ -740,16 +683,36 @@ function letterStyles(){
     .sign-name{font-weight:700;font-size:14px}
     .sign-title{font-size:12px;color:#555}
     .seal{width:80px;height:80px;border:3px solid #1A7A4A;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:10px;font-weight:700;color:#1A7A4A;padding:8px}
+    .cert-footer{margin-top:30px;border-top:1px solid #E0E0DC;padding-top:16px;display:flex;align-items:center;justify-content:space-between}
+    .cert-num-block{font-family:monospace;font-size:13px;color:#1A7A4A;font-weight:700}
+    .cert-num-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+    #qr-container canvas,#qr-container img{width:70px!important;height:70px!important}
     @media print{body{padding:40px}}
-  </style>`;
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>`;
 }
 
-function joiningLetterHTML(d, dateStr, endStr){
-  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Joining Letter</title>${letterStyles()}</head><body>
-  <div class="header">
-    <div><div class="logo">Lyroweb<span>.Solution</span></div><div class="logo-sub">A Sohima Production Initiative · Mr. Lyricist Label</div><div class="gold-line"></div></div>
-    <div style="text-align:right;font-size:12px;color:#888">Date: ${dateStr}<br/>Ref: LWS/JL/${new Date().getFullYear()}/${Math.floor(Math.random()*9000)+1000}</div>
+function certFooter(certNumber){
+  const verifyUrl = `${VERIFY_BASE_URL}?cert=${certNumber}`;
+  return `<div class="cert-footer">
+    <div>
+      <div class="cert-num-label">Certificate Number</div>
+      <div class="cert-num-block">${certNumber}</div>
+      <div style="font-size:10px;color:#888;margin-top:4px">Verify at: lyroweb-portal.vercel.app/verify.html</div>
+    </div>
+    <div id="qr-container"></div>
   </div>
+  <script>
+    window.onload = function(){
+      new QRCode(document.getElementById('qr-container'),{text:'${verifyUrl}',width:70,height:70,colorDark:'#1A7A4A',colorLight:'#ffffff'});
+    };
+  <\/script>`;
+}
+
+function joiningLetterHTML(d,dateStr,endStr){
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Joining Letter</title>${letterStyles()}</head><body>
+  <div class="header"><div><div class="logo">Lyroweb<span>.Solution</span></div><div class="logo-sub">A Sohima Production Initiative · Mr. Lyricist Label</div><div class="gold-line"></div></div>
+  <div style="text-align:right;font-size:12px;color:#888">Date: ${dateStr}<br/>Ref: LWS/JL/${new Date().getFullYear()}/${d.certNumber||'—'}</div></div>
   <h2>Offer & Joining Letter</h2>
   <p class="body-text">This is to inform that <strong>${d.name}</strong> has been selected for the <strong>Lyroweb Solution Internship Programme</strong> under the <strong>${d.track}</strong> track.</p>
   <div class="field"><strong>Intern Name:</strong> ${d.name}</div>
@@ -760,21 +723,20 @@ function joiningLetterHTML(d, dateStr, endStr){
   <div class="field"><strong>Start Date:</strong> ${dateStr}</div>
   <div class="field"><strong>End Date:</strong> ${endStr}</div>
   <div class="field"><strong>Stipend:</strong> Unpaid (Certificate + Experience Letter provided)</div>
-  <p class="body-text">The intern is expected to complete the assigned tasks within the stipulated time and maintain professional conduct throughout the programme. Upon successful completion, the intern will be awarded a Completion Certificate and an Experience Letter.</p>
+  <p class="body-text">The intern is expected to complete the assigned tasks within the stipulated time and maintain professional conduct throughout the programme.</p>
   <p class="body-text">We welcome you to the Lyroweb Solution family and wish you a productive learning experience.</p>
   <div class="footer">
     <div class="sign-block"><div style="height:40px"></div><div class="sign-line"></div><div class="sign-name">Lyroweb Solution</div><div class="sign-title">Authorised Signatory<br/>Sohima Production</div></div>
     <div class="seal">LYROWEB<br/>SOLUTION<br/>✦<br/>OFFICIAL</div>
   </div>
+  ${certFooter(d.certNumber||'—')}
   </body></html>`;
 }
 
-function completionLetterHTML(d, dateStr){
+function completionLetterHTML(d,dateStr){
   return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Completion Certificate</title>${letterStyles()}</head><body>
-  <div class="header">
-    <div><div class="logo">Lyroweb<span>.Solution</span></div><div class="logo-sub">A Sohima Production Initiative · Mr. Lyricist Label</div><div class="gold-line"></div></div>
-    <div style="text-align:right;font-size:12px;color:#888">Date: ${dateStr}<br/>Ref: LWS/CC/${new Date().getFullYear()}/${Math.floor(Math.random()*9000)+1000}</div>
-  </div>
+  <div class="header"><div><div class="logo">Lyroweb<span>.Solution</span></div><div class="logo-sub">A Sohima Production Initiative · Mr. Lyricist Label</div><div class="gold-line"></div></div>
+  <div style="text-align:right;font-size:12px;color:#888">Date: ${dateStr}<br/>Cert No: ${d.certNumber||'—'}</div></div>
   <div style="text-align:center;margin:30px 0">
     <div style="font-size:13px;letter-spacing:3px;color:#888;text-transform:uppercase;margin-bottom:10px">Certificate of Completion</div>
     <div style="font-size:13px;color:#555">This is to certify that</div>
@@ -789,15 +751,14 @@ function completionLetterHTML(d, dateStr){
     <div class="sign-block"><div style="height:40px"></div><div class="sign-line"></div><div class="sign-name">Lyroweb Solution</div><div class="sign-title">Authorised Signatory<br/>Sohima Production</div></div>
     <div class="seal">LYROWEB<br/>SOLUTION<br/>✦<br/>CERTIFIED</div>
   </div>
+  ${certFooter(d.certNumber||'—')}
   </body></html>`;
 }
 
-function experienceLetterHTML(d, dateStr){
+function experienceLetterHTML(d,dateStr){
   return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Experience Letter</title>${letterStyles()}</head><body>
-  <div class="header">
-    <div><div class="logo">Lyroweb<span>.Solution</span></div><div class="logo-sub">A Sohima Production Initiative · Mr. Lyricist Label</div><div class="gold-line"></div></div>
-    <div style="text-align:right;font-size:12px;color:#888">Date: ${dateStr}<br/>Ref: LWS/EL/${new Date().getFullYear()}/${Math.floor(Math.random()*9000)+1000}</div>
-  </div>
+  <div class="header"><div><div class="logo">Lyroweb<span>.Solution</span></div><div class="logo-sub">A Sohima Production Initiative · Mr. Lyricist Label</div><div class="gold-line"></div></div>
+  <div style="text-align:right;font-size:12px;color:#888">Date: ${dateStr}<br/>Ref: LWS/EL/${new Date().getFullYear()}/${d.certNumber||'—'}</div></div>
   <h2>Experience & Recommendation Letter</h2>
   <p class="body-text">This is to certify that <strong>${d.name}</strong> from <strong>${d.college}</strong> has successfully completed a 1-month remote internship with <strong>Lyroweb Solution</strong> (a unit of Sohima Production) in the <strong>${d.track}</strong> department.</p>
   <p class="body-text">During the tenure, ${d.name} exhibited strong work ethic, creativity, and technical aptitude. They contributed meaningfully to assigned projects and demonstrated a keen interest in learning and growth.</p>
@@ -806,44 +767,40 @@ function experienceLetterHTML(d, dateStr){
     <div class="sign-block"><div style="height:40px"></div><div class="sign-line"></div><div class="sign-name">Lyroweb Solution</div><div class="sign-title">Authorised Signatory<br/>Sohima Production</div></div>
     <div class="seal">LYROWEB<br/>SOLUTION<br/>✦<br/>OFFICIAL</div>
   </div>
+  ${certFooter(d.certNumber||'—')}
   </body></html>`;
 }
 
-// ADMIN — LOAD STUDENTS
-let allStudentsData = [];
+// ADMIN
 window.loadAllStudents = async () => {
-  const tbody = document.getElementById('students-table-body');
-  tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--gray-mid)">Loading...</td></tr>';
+  const tbody=document.getElementById('students-table-body');
+  tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--gray-mid)">Loading...</td></tr>';
   try {
-    const snap = await getDocs(collection(db,'students'));
-    allStudentsData = snap.docs.map(d => ({id:d.id,...d.data()}))
-      .filter(d => d.email !== ADMIN_EMAIL)
-      .sort((a,b) => (b.joinedAt?.seconds||0)-(a.joinedAt?.seconds||0));
+    const snap=await getDocs(collection(db,'students'));
+    allStudentsData=snap.docs.map(d=>({id:d.id,...d.data()})).filter(d=>d.email!==ADMIN_EMAIL).sort((a,b)=>(b.joinedAt?.seconds||0)-(a.joinedAt?.seconds||0));
     renderStudentsTable();
-  } catch(e){ tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--red)">Error: ${e.message}</td></tr>`; }
+  } catch(e){ tbody.innerHTML=`<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--red)">Error: ${e.message}</td></tr>`; }
 };
 
 window.renderStudentsTable = () => {
-  const search = document.getElementById('search-students').value.toLowerCase();
-  const track = document.getElementById('filter-track').value;
-  let filtered = allStudentsData.filter(d =>
-    (!search || d.name?.toLowerCase().includes(search) || d.email?.toLowerCase().includes(search)) &&
-    (!track || d.track === track)
-  );
-  const tbody = document.getElementById('students-table-body');
-  document.getElementById('student-count').textContent = `Showing ${filtered.length} of ${allStudentsData.length} students`;
-  if(!filtered.length){ tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--gray-mid)">No students found.</td></tr>'; return; }
-  tbody.innerHTML = filtered.map((d,i) => {
-    const joined = d.joinedAt ? new Date(d.joinedAt.seconds*1000).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : '—';
+  const search=document.getElementById('search-students').value.toLowerCase();
+  const track=document.getElementById('filter-track').value;
+  const filtered=allStudentsData.filter(d=>(!search||d.name?.toLowerCase().includes(search)||d.email?.toLowerCase().includes(search))&&(!track||d.track===track));
+  const tbody=document.getElementById('students-table-body');
+  document.getElementById('student-count').textContent=`Showing ${filtered.length} of ${allStudentsData.length} students`;
+  if(!filtered.length){ tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--gray-mid)">No students found.</td></tr>'; return; }
+  tbody.innerHTML=filtered.map((d,i)=>{
+    const joined=d.joinedAt?new Date(d.joinedAt.seconds*1000).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):'—';
     return `<tr>
       <td style="color:var(--gray-mid)">${i+1}</td>
       <td><strong>${d.name||'—'}</strong><div style="font-size:11px;color:var(--gray-mid)">${d.phone||''}</div></td>
-      <td style="color:var(--gray-mid)">${d.email||'—'}</td>
+      <td style="color:var(--gray-mid);font-size:12px">${d.email||'—'}</td>
       <td><span class="track-tag">${d.track||'—'}</span></td>
-      <td style="font-size:13px">${d.college||'—'}</td>
-      <td style="font-size:13px;color:var(--gray-mid)">${joined}</td>
+      <td style="font-size:12px">${d.college||'—'}</td>
+      <td style="font-size:12px;color:var(--gray-mid)">${joined}</td>
+      <td style="font-family:monospace;font-size:11px;color:var(--green)">${d.certNumber||'—'}</td>
       <td><select class="select-status" onchange="updateStudentStatus('${d.id}',this.value)">
-        <option ${d.status==='Pending'?'selected':''}>Pending</option>
+        <option ${(d.status||'Pending')==='Pending'?'selected':''}>Pending</option>
         <option ${d.status==='Submitted'?'selected':''}>Submitted</option>
         <option ${d.status==='Approved'?'selected':''}>Approved</option>
         <option ${d.status==='Completed'?'selected':''}>Completed</option>
@@ -853,56 +810,47 @@ window.renderStudentsTable = () => {
   }).join('');
 };
 
-window.updateStudentStatus = async (uid, status) => {
+window.updateStudentStatus = async (uid,status) => {
   try {
-    await updateDoc(doc(db,'students',uid), {status});
-    const idx = allStudentsData.findIndex(d => d.id===uid);
-    if(idx>=0) allStudentsData[idx].status = status;
+    await updateDoc(doc(db,'students',uid),{status});
+    const idx=allStudentsData.findIndex(d=>d.id===uid);
+    if(idx>=0) allStudentsData[idx].status=status;
     showToast(`Status updated to ${status}`);
   } catch(e){ showToast('Update failed','error'); }
 };
 
 window.viewStudentDetails = (uid) => {
-  const d = allStudentsData.find(s => s.id===uid);
+  const d=allStudentsData.find(s=>s.id===uid);
   if(!d) return;
-  const joined = d.joinedAt ? new Date(d.joinedAt.seconds*1000).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'}) : '—';
-  alert(`👤 ${d.name}\n📧 ${d.email}\n📱 ${d.phone||'—'}\n🎓 ${d.college}\n🏷️ ${d.track}\n📅 Joined: ${joined}\n✅ Status: ${d.status||'Pending'}`);
+  const joined=d.joinedAt?new Date(d.joinedAt.seconds*1000).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'}):'—';
+  alert(`👤 ${d.name}\n📧 ${d.email}\n📱 ${d.phone||'—'}\n🎓 ${d.college}\n🏷️ ${d.track}\n📅 Joined: ${joined}\n✅ Status: ${d.status||'Pending'}\n🏅 Cert No: ${d.certNumber||'—'}`);
 };
 
-// ADMIN — SUBMISSIONS
 window.loadAllSubmissions = async () => {
-  const tbody = document.getElementById('submissions-table-body');
-  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--gray-mid)">Loading...</td></tr>';
+  const tbody=document.getElementById('submissions-table-body');
+  tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--gray-mid)">Loading...</td></tr>';
   try {
-    const q = query(collection(db,'submissions'), orderBy('submittedAt','desc'));
-    const snap = await getDocs(q);
-    if(snap.empty){ tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--gray-mid)">No submissions yet.</td></tr>'; return; }
-    tbody.innerHTML = snap.docs.map((doc,i) => {
-      const s = doc.data();
-      const date = s.submittedAt ? new Date(s.submittedAt.seconds*1000).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
+    const q=query(collection(db,'submissions'),orderBy('submittedAt','desc'));
+    const snap=await getDocs(q);
+    if(snap.empty){ tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--gray-mid)">No submissions yet.</td></tr>'; return; }
+    tbody.innerHTML=snap.docs.map((doc,i)=>{
+      const s=doc.data();
+      const date=s.submittedAt?new Date(s.submittedAt.seconds*1000).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):'—';
       return `<tr>
         <td style="color:var(--gray-mid)">${i+1}</td>
         <td><strong>${s.name||'—'}</strong><div style="font-size:11px;color:var(--gray-mid)">${s.email||''}</div></td>
         <td><span class="track-tag">${s.track||'—'}</span></td>
-        <td style="font-size:13px">📎 ${s.fileName||'—'}</td>
-        <td style="font-size:13px;color:var(--gray-mid)">${date}</td>
-        <td style="display:flex;gap:8px;flex-wrap:wrap"><a href="${s.fileUrl}" target="_blank" class="action-btn view" style="text-decoration:none">⬇️ Download</a></td>
+        <td style="font-size:12px">📎 ${s.fileName||'—'}</td>
+        <td style="font-size:12px;color:var(--gray-mid)">${date}</td>
+        <td><a href="${s.fileUrl}" target="_blank" class="action-btn view" style="text-decoration:none">⬇️ Download</a></td>
       </tr>`;
     }).join('');
-  } catch(e){ tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--red)">Error: ${e.message}</td></tr>`; }
+  } catch(e){ tbody.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--red);padding:24px">Error: ${e.message}</td></tr>`; }
 };
 
 function friendlyError(code){
-  const map = {
-    'auth/email-already-in-use':'This email is already registered. Please sign in.',
-    'auth/invalid-email':'Invalid email address.',
-    'auth/weak-password':'Password is too weak. Use at least 6 characters.',
-    'auth/user-not-found':'No account found with this email.',
-    'auth/wrong-password':'Incorrect password. Please try again.',
-    'auth/invalid-credential':'Incorrect email or password.',
-    'auth/too-many-requests':'Too many attempts. Please try again later.',
-  };
-  return map[code] || 'Something went wrong. Please try again.';
+  const map={'auth/email-already-in-use':'This email is already registered. Please sign in.','auth/invalid-email':'Invalid email address.','auth/weak-password':'Password too weak. Use at least 6 characters.','auth/user-not-found':'No account found with this email.','auth/wrong-password':'Incorrect password.','auth/invalid-credential':'Incorrect email or password.','auth/too-many-requests':'Too many attempts. Try again later.'};
+  return map[code]||'Something went wrong. Please try again.';
 }
 </script>
 </body>
